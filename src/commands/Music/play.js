@@ -6,7 +6,7 @@ module.exports = class extends Command {
   constructor (...args) {
     super(...args, {
       name: 'play',
-      description: 'Play a son in your voice channel',
+      description: 'Play a song in your voice channel',
       options: [{
         name: 'query',
         type: 'STRING',
@@ -36,7 +36,6 @@ module.exports = class extends Command {
       if (!channel.joinable) { return interaction.reply(lang.play.semPerm) }
       await player.connect()
     }
-
     const player = interaction.client.manager.players.get(interaction.guild.id)
 
     if (!player.voiceChannel === channel.id) { return interaction.reply(lang.play.tocandoJa) }

@@ -124,12 +124,12 @@ class Util {
             options: command.options
           }
         } else {
+          // eslint-disable-next-line no-unused-vars
           slashCommand = {
             name: command.name,
             description: command.description
           }
         }
-        this.client.application?.commands.set(slashCommand)
         this.client.commands.set(command.name, command)
       }
     })

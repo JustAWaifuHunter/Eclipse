@@ -1,6 +1,5 @@
 const Sentry = require('@sentry/node')
 const { Client, Options, Collection, Permissions } = require('discord.js')
-const settings = require('../structures/Settings')
 const DatabaseManager = require('denky-database')
 const Util = require('../structures/Utils.js')
 const pkg = require('../../package.json')
@@ -44,8 +43,6 @@ class Eclipse
     })
 
     this.validate(options)
-
-    this.settings = settings
 
     this.commands = new Collection()
 

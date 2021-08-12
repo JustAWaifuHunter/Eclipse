@@ -37,7 +37,6 @@ module.exports = async (client) => {
       embed.setDescription(`**${lang.erela.tocando}** \`${track.title}\``)
       embed.setTimestamp()
       embed.setColor(client.channels.cache.get(player.textChannel).guild.me.roles.highest.color)
-      embed.setFooter()
       player.get('interaction').reply({ embeds: [embed] }).then(msg => {
         player.set('interaction', null)
         player.set('message', msg)

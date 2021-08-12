@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-sequences */
 const Event = require('../interfaces/Event')
-const LavalinkManager = require('../core/player/lavalinkManager')
+const LavalinkManager = require('../core/Player/lavalinkManager')
 const logger = require('../modules/logger')
 
 module.exports = class extends Event {

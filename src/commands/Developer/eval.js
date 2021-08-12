@@ -4,30 +4,21 @@ module.exports = class extends Command {
   constructor (...args) {
     super(...args, {
       name: 'eval',
-      aliases: ['ev', 'e'],
-      description: {
-        pt: 'Roda codigos',
-        en: 'Run codes'
-      },
-      usage: {
-        pt: '<codigo>',
-        en: '<code>'
-      },
+      description: 'Run codes',
       category: 'Developer',
       enabled: true,
-      ownerOnly: true,
-      args: true
+      ownerOnly: true
     })
   }
 
-  async run (message, args) {
+  async run (interaction, args) {
     try {
       // eslint-disable-next-line no-eval
-      let code = await eval(args.join(' '))
+      let code = await eval(interaction.options.getString('code'))
       if (typeof code !== 'string') code = await require('util').inspect(code, { depth: 0 })
-      message.reply(`📩 Input \`\`\`js\n${args.join(' ')}\`\`\`\n🚩 Exit \`\`\`js\n${code.slice(0, 1010)}\n\`\`\``)
+      interaction.reply(`📩 Input \`\`\`js\n${interaction.options.getString('code')}\`\`\`\n🚩 Exit \`\`\`js\n${code.slice(0, 1010)}\n\`\`\``)
     } catch (err) {
-      message.reply(`\`\`\`js\n${err}\n\`\`\``)
+      interaction.reply(`\`\`\`js\n${err}\n\`\`\``)
     }
   }
 }

@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node: [14]
+        node: [16]
 
     steps:
       - name: Checkout 🛎
@@ -27,8 +27,6 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: Install dependencies 👨🏻‍💻
-        run: npm i
-      - name: Copy config example 📓
-        run: cp config/config.example.json config/config.json
+        run: npm install
       - name: Run Linter ✏️
         run: npm run eslint
