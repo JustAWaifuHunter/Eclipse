@@ -4,9 +4,9 @@ module.exports = async (client) => {
       dm: 'Hello. I like my privacy, and do not handle things in DMs. It appears this is a direct message. You should interact with me in your guild instead.'
     },
     geral: {
-      naoTa: 'Please connect to a voice channel',
-      mesmo: 'Please connect to the same voice channel as me',
-      nada: "There's nothing playing this server"
+      naoTa: 'You have to be connected to a voice channel before you can use this command.',
+      mesmo: 'Connect to the same voice channel as me.',
+      nada: "There's nothing playing at the moment in your server."
     },
     voiceUpdate: {
       sairei: 'Leaving',
@@ -23,6 +23,7 @@ module.exports = async (client) => {
     message: {
       prefixo: 'My prefix is',
       desabilitado: 'This command is disabled',
+      manutencao: 'Bot under maintenance, please try again later.',
       dono: 'This command is only released to the bot owner',
       nsfw: 'This command can only be used on NSFW channels',
       args: 'Sorry, this command requires arguments to work. Use:',
@@ -51,16 +52,16 @@ module.exports = async (client) => {
       semCanal: 'Enter a voice channel and use the command again',
       semPerm: 'I am not allowed to connect to the voice channel test',
       tocandoJa: "I'm already playing music on this server",
-      erro: 'An error happened sorry',
+      erro: 'Error',
       semResultado: "I didn't find results",
-      musgaAdd: 'Music added',
+      musgaAdd: 'Added',
       duracao: 'Duration',
       solicitado: 'Requested by',
       playlist: 'Added playlist',
       com: 'with',
       musicas: 'songs',
-      fila: 'Added',
-      fila2: 'the queue'
+      fila: 'Queued',
+      fila2: 'to the queue'
     },
     botinfo: {
       servidores: 'Servers',
@@ -103,7 +104,7 @@ module.exports = async (client) => {
       arg3: 'of'
     },
     np: {
-      nada: "There's nothing playing at the moment"
+      nada: "There's nothing playing at the moment in your server."
     },
     vaporwave: {
       ativado: 'Vaporwave filter activated',
@@ -137,12 +138,10 @@ module.exports = async (client) => {
       finish: 'I shuffled the music queue'
     },
     pause: {
-      pausadoJa: 'Music is already paused',
-      pausado: 'Paused the music'
+      pausadoJa: 'Music is already paused'
     },
     resume: {
-      resumidoJa: 'Music is not paused',
-      resumido: ''
+      resumidoJa: 'Music is not paused'
     }
   }
 }

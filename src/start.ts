@@ -17,4 +17,8 @@ shard.on('shardCreate', shard => {
   logger.info(`Starting shard ${shard.id}`)
 })
 
+process.on('unhandledRejection', error => {
+  logger.error(4, `Unhandled promise rejection: ${error}`)
+})
+
 shard.spawn()

@@ -18,13 +18,17 @@
     "start": "node dist/src/start.js",
     "build": "tsc",
     "build:start": "tsc && node -r dotenv/config dist/src/start.js",
-    "eslint": "eslint ."
+    "eslint": "eslint .",
+    "sentry:release": "sentry-cli releases new --finalize $VERSION",
+    "sentry:sourcemaps": "sentry-cli releases files $VERSION upload-sourcemaps --ext map dist",
+    "sentry:commits": "sentry-cli releases set-commits --auto $VERSION"
   },
   "main": "dist/src/index.ts",
   "engines": {
     "node": ">=16.0.0"
   },
   "dependencies": {
+    "@sentry/cli": "^1.68.0",
     "denky-database": "^1.0.6",
     "discord.js": "^13.0.1",
     "erela.js": "^2.3.3",

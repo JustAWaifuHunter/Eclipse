@@ -24,6 +24,7 @@ module.exports = async (client) => {
       prefixo: 'Meu prefixo é',
       desabilitado: 'Este comando esta desabilitado',
       dono: 'Este comando esta liberado apenas para o dono do bot',
+      manutencao: 'Bot em manutenção, por favor tente novamente mais tarde.',
       nsfw: 'Este comando so pode ser usando em canais NSFW',
       args: 'Desculpe, este comando requer argumentos para funcionar. Use:',
       userPerms: 'Esta faltando a permissão',
@@ -137,7 +138,7 @@ module.exports = async (client) => {
       finish: 'Embaralhei a fila de música'
     },
     pause: {
-      pausadoJa: 'A música já esta pausado',
+      pausadoJa: 'A música já esta pausada',
       pausado: 'Pausei a música'
     },
     resume: {

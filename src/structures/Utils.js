@@ -130,6 +130,7 @@ class Util {
             description: command.description
           }
         }
+        this.client.application?.commands.set([slashCommand])
         this.client.commands.set(command.name, command)
       }
     })

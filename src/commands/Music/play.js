@@ -24,7 +24,12 @@ module.exports = class extends Command {
 
     const { channel } = interaction.member.voice
 
-    if (!channel) return interaction.reply(lang.play.semCanal)
+    if (!channel) {
+      const embed = new MessageEmbed()
+      embed.setColor(this.client.colors.error)
+      embed.setDescription(lang.play.semCanal)
+      return interaction.reply({ embeds: [embed] })
+    }
 
     if (!play) {
       const player = interaction.client.manager.create({
@@ -33,12 +38,22 @@ module.exports = class extends Command {
         textChannel: interaction.channel.id,
         selfDeafen: true
       })
-      if (!channel.joinable) { return interaction.reply(lang.play.semPerm) }
+      if (!channel.joinable) {
+        const embed1 = new MessageEmbed()
+        embed1.setColor(this.client.colors.error)
+        embed1.setDescription(lang.play.semPerm)
+        return interaction.reply({ embeds: [embed1] })
+      }
       await player.connect()
     }
     const player = interaction.client.manager.players.get(interaction.guild.id)
 
-    if (!player.voiceChannel === channel.id) { return interaction.reply(lang.play.tocandoJa) }
+    if (!player.voiceChannel === channel.id) {
+      const embed2 = new MessageEmbed()
+      embed2.setColor(this.client.colors.warning)
+      embed2.setDescription(lang.play.tocandoJa)
+      return interaction.reply({ embeds: [embed2] })
+    }
 
     const search = interaction.options.getString('query')
     let res
@@ -50,46 +65,47 @@ module.exports = class extends Command {
         throw new Error(res.exception.message)
       }
     } catch (err) {
-      return interaction.reply(`${lang.play.erro}: ${err.message}`)
+      const embed3 = new MessageEmbed()
+      embed3.setColor(this.client.colors.error)
+      embed3.setDescription(`${lang.play.erro} \`${err.message}\``)
+      return interaction.reply({ embeds: [embed3] })
     }
 
     switch (res.loadType) {
       case 'NO_MATCHES':
         if (!player.queue.current) player.destroy()
-        return interaction.reply(lang.play.semResultado)
+        const embed4 = new MessageEmbed()
+        embed4.setColor(this.client.colors.error)
+        embed4.setDescription(lang.play.semResultado)
+        return interaction.reply({ embeds: [embed4] })
 
       case 'TRACK_LOADED':
         player.set('interaction', interaction)
         player.queue.add(res.tracks[0])
         if (!player.playing && !player.paused && !player.queue.size) player.play()
-        const embed = new MessageEmbed()
-        embed.setTimestamp()
-        embed.setColor(interaction.guild.me.roles.highest.color)
-        embed.setDescription(`**${lang.play.musgaAdd}** \`${res.tracks[0].title}\`\n**${lang.play.duracao}:** \`${this.client.utils.time(res.tracks[0].duration)}\``)
-        embed.setFooter(`${lang.play.solicitado} ${res.tracks[0].requester.tag}`, `${res.tracks[0].requester.displayAvatarURL({ dynamic: true, size: 2048 })}`)
-        interaction.reply({ embeds: [embed] })
+        const embed5 = new MessageEmbed()
+        embed5.setColor(this.client.colors.success)
+        embed5.setDescription(`${lang.play.musgaAdd} [${res.tracks[0].title}](${res.tracks[0].uri})`)
+        if (player.queue.length >= 1) interaction.reply({ embeds: [embed5] })
         return
 
       case 'PLAYLIST_LOADED':
         player.set('interaction', interaction)
         player.queue.add(res.tracks)
         if (!player.playing && !player.paused && player.queue.totalSize === res.tracks.length) player.play()
-        const embed2 = new MessageEmbed()
-        embed2.setTimestamp()
-        embed2.setColor(interaction.guild.me.roles.highest.color)
-        embed2.setDescription(`**${lang.play.playlist}** \`${res.playlist.name}\` **${lang.play.com}** \`${res.tracks.length}\` **${lang.play.musicas}**\n**${lang.play.duracao}:** \`${this.client.utils.time(res.playlist.duration)}\``)
-        embed2.setFooter(`${lang.play.solicitado} ${res.tracks[0].requester.tag}`, `${res.tracks[0].requester.displayAvatarURL({ dynamic: true, size: 2048 })}`)
-        return interaction.reply({ embeds: [embed2] })
+        const embed6 = new MessageEmbed()
+        embed6.setColor(this.client.colors.success)
+        embed6.setDescription(`${lang.play.playlist} \`${res.playlist.name}\` ${lang.play.com} \`${res.tracks.length}\` ${lang.play.musicas}`)
+        return interaction.reply({ embeds: [embed6] })
 
       case 'SEARCH_RESULT':
         player.set('interaction', interaction)
         await player.queue.add(res.tracks[0])
         if (!player.playing && !player.paused && !player.queue.length) player.play()
-        const embed4 = new MessageEmbed()
-        embed4.setColor(interaction.guild.me.roles.highest.color)
-        embed4.setFooter(`${lang.play.solicitado} ${res.tracks[0].requester.tag}`, `${res.tracks[0].requester.displayAvatarURL({ dynamic: true, size: 2048 })}`)
-        embed4.setDescription(`**${lang.play.fila}** \`${res.tracks[0].title}\` **${lang.play.fila2}** \n**${lang.play.duracao}:** \`${this.client.utils.time(res.tracks[0].duration)}\``)
-        interaction.reply({ embeds: [embed4] })
+        const embed7 = new MessageEmbed()
+        embed7.setColor(this.client.colors.success)
+        embed7.setDescription(`${lang.play.fila} [${res.tracks[0].title}](${res.tracks[0].uri})`)
+        if (player.queue.length >= 1) interaction.reply({ embeds: [embed7] })
     }
   }
 }

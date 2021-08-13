@@ -1,12 +1,13 @@
 /* eslint-disable promise/param-names */
 /* eslint-disable eqeqeq */
 const Event = require('../interfaces/Event')
+const { MessageEmbed } = require('discord.js')
 
 module.exports = class extends Event {
   async run (oldVoice, newVoice) {
     const player = this.client.manager.players.get(oldVoice.guild.id)
 
-    let lang = this.client.db.get(oldVoice.guild.id) || 'pt'
+    let lang = this.client.db.get(oldVoice.guild.id) || 'en'
     if (lang === 'en') lang = this.client.lang.en
     if (lang === 'pt') lang = this.client.lang.pt
 
@@ -21,7 +22,11 @@ module.exports = class extends Event {
     if (oldVoice.guild.members.cache.get(this.client.user.id).voice.channel.id === oldVoice.channelId) {
       if (oldVoice.guild.me.voice.channel && oldVoice.guild.me.voice.channel.members.size == 1) {
         const vcName = oldVoice.guild.me.voice.channel.name
-        const msg = await this.client.channels.cache.get(player.textChannel).send(`${lang.voiceUpdate.sairei} **${vcName}** ${lang.voiceUpdate.em} ${this.client.utils.time(60000)} ${lang.voiceUpdate.minuto}`)
+
+        const embed = new MessageEmbed()
+          .setColor(this.client.colors.warning)
+          .setDescription(`${lang.voiceUpdate.sairei} **${vcName}** ${lang.voiceUpdate.em} ${this.client.utils.time(60000)} ${lang.voiceUpdate.minuto}`)
+        const msg = await this.client.channels.cache.get(player.textChannel).send({ embeds: [embed] })
 
         const delay = ms => new Promise(res => setTimeout(res, ms))
         await delay(60000)
@@ -35,8 +40,6 @@ module.exports = class extends Event {
           } else {
             oldVoice.guild.voice.channel.leave()
           }
-          return msg.edit(`${lang.voiceUpdate.sai} **${vcName}** ${lang.voiceUpdate.final}`)
-        } else {
           return msg.delete()
         }
       }

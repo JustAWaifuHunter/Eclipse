@@ -34,9 +34,9 @@ module.exports = async (client) => {
       if (lang === 'en') lang = client.lang.en
       if (lang === 'pt') lang = client.lang.pt
       const embed = new MessageEmbed()
-      embed.setDescription(`**${lang.erela.tocando}** \`${track.title}\``)
-      embed.setTimestamp()
-      embed.setColor(client.channels.cache.get(player.textChannel).guild.me.roles.highest.color)
+      embed.setTitle(lang.erela.tocando)
+      embed.setDescription(`[${track.title}](${track.uri})`)
+      embed.setColor(client.colors.default)
       player.get('interaction').reply({ embeds: [embed] }).then(msg => {
         player.set('interaction', null)
         player.set('message', msg)
@@ -63,7 +63,10 @@ module.exports = async (client) => {
         let lang = client.db.get(channel.guild.id) || 'en'
         if (lang === 'en') lang = client.lang.en
         if (lang === 'pt') lang = client.lang.pt
-        channel.send(`${lang.play.erro}: ${payload.error}`)
+        const embed = new MessageEmbed()
+        embed.setDescription(`${lang.play.erro} \`${payload.error}\``)
+        embed.setColor(client.colors.error)
+        channel.send({ embeds: [embed] })
       }
     })
 
@@ -73,7 +76,10 @@ module.exports = async (client) => {
         let lang = client.db.get(channel.guild.id) || 'en'
         if (lang === 'en') lang = client.lang.en
         if (lang === 'pt') lang = client.lang.pt
-        channel.send(`${lang.play.erro}: ${payload.error}`)
+        const embed = new MessageEmbed()
+        embed.setDescription(`${lang.play.erro} \`${payload.error}\``)
+        embed.setColor(client.colors.error)
+        channel.send({ embeds: [embed] })
       }
     })
 
@@ -82,7 +88,10 @@ module.exports = async (client) => {
       let lang = client.db.get(channel.guild.id) || 'en'
       if (lang === 'en') lang = client.lang.en
       if (lang === 'pt') lang = client.lang.pt
-      channel.send(lang.erela.saindo)
+      const embed = new MessageEmbed()
+      embed.setDescription(lang.erela.saindo)
+      embed.setColor(client.colors.default)
+      channel.send({ embeds: [embed] })
       player.destroy()
     })
 }

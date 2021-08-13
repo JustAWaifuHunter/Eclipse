@@ -1,12 +1,14 @@
-const Sentry = require('@sentry/node')
 const { Client, Options, Collection, Permissions } = require('discord.js')
+const { colors } = require('../structures/Constants')
 const DatabaseManager = require('denky-database')
 const Util = require('../structures/Utils.js')
 const pkg = require('../../package.json')
+const Sentry = require('@sentry/node')
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   tracesSampleRate: 1.0,
+  environment: process.env.NODE_ENV,
   release: `eclipse@${pkg.version}`
 })
 
@@ -53,6 +55,8 @@ class Eclipse
     this.utils = new Util(this)
 
     this.lang = {}
+
+    this.colors = colors
 
     this.version = pkg.version
 
