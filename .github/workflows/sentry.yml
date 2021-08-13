@@ -5,7 +5,7 @@ on:
       - develop
 jobs:
   sentry_bot:
-    name: Create sentry release and upload sourcemaps
+    name: Create sentry release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -21,14 +21,9 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Create sentry release and upload sourcemaps
-        run: |
-          npm run sentry:release
-          npm run sentry:commits
-          npm run sentry:sourcemaps
+      - name: Create Sentry release
+        uses: getsentry/action-release@v1
         env:
-          SENTRY_URL: ${{ secrets.SENTRY_URL }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-          VERSION: ${{ github.sha }}
